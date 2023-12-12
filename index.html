@@ -95,3 +95,21 @@
 
 </body>
 </html>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+ var challengesLink = document.querySelector('nav a[href="challenges.html"]');
+
+ challengesLink.addEventListener('click', function (event) {
+    event.preventDefault();
+
+    var iframe = document.createElement('iframe');
+    iframe.src = 'challenges.html';
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+
+    var main = document.querySelector('main');
+    main.innerHTML = '';
+    main.appendChild(iframe);
+ });
+});
+</script>
