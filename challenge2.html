@@ -26,17 +26,17 @@
         &copy; 2023 CTF Password Guessing Challenge. All rights reserved.
     </footer>
     <script>
-        function checkPassword() {
+       function checkPassword() {
             let input = document.getElementById('password').value;
             let reversedInput = input.split('').reverse().join('');
-            let resultElement = '';
+            let resultElement = document.getElementById('password');
 
             if (reversedInput === "SVEIKINim4i") {
-                  resultElement.style.color = 'green';
-        resultElement.textContent = 'Congratulations! You guessed the correct password.';
-        setTimeout(function() {
-            window.location.href = 'challenge3.html';
-        }, 2000);
+                resultElement.style.color = 'green';
+                resultElement.textContent = 'Congratulations! You guessed the correct password.';
+                setTimeout(function() {
+                    window.location.href = 'challenge3.html';
+                }, 2000);
             } else {
                 resultElement.style.color = 'red';
                 resultElement.textContent = 'Incorrect password. Try again.';
