@@ -43,6 +43,7 @@ main {
     padding: 20px;
     width: 100%;
     max-width: 1920px;
+    length: 100%;
     max-length: 1080px;
     margin: 0 auto;
 }
