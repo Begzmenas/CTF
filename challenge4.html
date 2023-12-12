@@ -4,19 +4,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello, World!</title>
+    <title>CTF Challenge</title>
 </head>
 
 <body>
 
     <header>
-        <h1>Hello, World!</h1>
+        <h1>CTF Challenge</h1>
     </header>
 
     <main>
-        <p>This is a simple "Hello, World!" example in HTML.</p>
+        <p>Welcome to the CTF challenge! Can you find the hidden flag?</p>
+        <p>Here's your first clue:</p>
+        <p id="clue">Decrypt this: Uifsf jt b tfdsfu qsphsbn!</p>
+        <br>
+        <label for="answer">Your Answer:</label>
+        <input type="text" id="answer" name="answer" required>
+        <br>
+        <button type="button" onclick="checkAnswer()">Submit Answer</button>
+        <p id="result"></p>
     </main>
 
+    <footer>
+        &copy; 2023 CTF Challenge. All rights reserved.
+    </footer>
+
+    <script>
+        function decrypt(text) {
+            // Simple Caesar Cipher decryption
+            const shift = 1;
+            return text.replace(/[a-zA-Z]/g, function (char) {
+                const code = char.charCodeAt(0);
+                const offset = char === char.toLowerCase() ? 97 : 65;
+                return String.fromCharCode((code - offset - shift + 26) % 26 + offset);
+            });
+        }
+
+        function checkAnswer() {
+            var answerInput = document.getElementById('answer');
+            var userAnswer = answerInput.value.toLowerCase();
+
+            if (decrypt(userAnswer) === "there is a secret password!") {
+                document.getElementById('result').innerText = "Congratulations! You found the correct answer.";
+            } else {
+                document.getElementById('result').innerText = "That is not the correct answer. Keep trying.";
+            }
+        }
+    </script>
 </body>
 
 </html>
