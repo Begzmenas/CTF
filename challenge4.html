@@ -16,7 +16,7 @@
     <main>
         <p>Welcome to the CTF challenge! Can you find the hidden flag?</p>
         <p>Here's your first clue:</p>
-        <p id="clue">Decrypt this: automobilis</p>
+        <p id="clue">Encrypt this: automobilis</p>
         <br>
         <label for="answer">Your Answer:</label>
         <input type="text" id="answer" name="answer" required>
@@ -31,7 +31,7 @@
 
     <script>
         function decrypt(text) {
-            // Simple Caesar Cipher decryption
+            
             const shift = 1;
             return text.replace(/[a-zA-Z]/g, function (char) {
                 const code = char.charCodeAt(0);
