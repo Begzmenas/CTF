@@ -32,9 +32,14 @@
             let result = '';
 
             if (reversedInput === "SVEIKINim4i") {
-                result = 'Congratulations! You have found the flag.';
+                  resultElement.style.color = 'green';
+        resultElement.textContent = 'Congratulations! You guessed the correct password.';
+        setTimeout(function() {
+            window.location.href = 'challenge3.html';
+        }, 2000);
             } else {
-                result = 'Incorrect! Try again.';
+                resultElement.style.color = 'red';
+                resultElement.textContent = 'Incorrect password. Try again.';
             }
 
             alert(result);
