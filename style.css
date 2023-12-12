@@ -58,12 +58,11 @@ main {
 }
 
 section {
-    margin: 0 auto;
+    margin-bottom: 20px;
 }
 
 h2 {
     color: #fff;
-    margin-bottom: 20px;
     text-align: center;
 }
 
