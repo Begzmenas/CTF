@@ -42,9 +42,7 @@ main {
     color: #fff;
     padding: 20px;
     width: 100%;
-    max-width: 1920px;
-    length: 100%;
-    max-length: 1080px;
+    min-height: 100vh;
     margin: 0 auto;
 }
 
