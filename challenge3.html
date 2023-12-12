@@ -28,26 +28,22 @@
         &copy; 2023 CTF Password Guessing Challenge. All rights reserved.
     </footer>
     <script>
-        async function hashString(str) {
-            const encoder = new TextEncoder();
-            const data = encoder.encode(str);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
-            return hashHex;
+        function hashString(str) {
+            const hash = window.btoa(unescape(encodeURIComponent(str)));
+            return hash;
         }
 
         function checkPassword() {
             var answerInput = document.getElementById('password');
             var userAnswer = answerInput.value;
 
-            hashString(userAnswer).then(hash => {
-                if (hash === "00f282be9a2391e9d2b8e74d104bce768b7796d3428e3c3d16995b07c0b1da58") {
-                    alert("Congratulations! You found the correct answer.");
-                } else {
-                    alert("That is not the correct answer. Keep trying.");
-                }
-            });
+            const hashedUserAnswer = hashString(userAnswer);
+
+            if (hashedUserAnswer === "Y3Rma2V5MQ==") {
+                alert("Congratulations! You found the correct answer.");
+            } else {
+                alert("That is not the correct answer. Keep trying.");
+            }
         }
     </script>
 </body>
