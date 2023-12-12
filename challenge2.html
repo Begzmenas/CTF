@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Basic CTF Challenge</title>
+    <style>
+        .ctf-input {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+        .ctf-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        .ctf-button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <h2>Basic CTF Challenge</h2>
+    <p>The answer is the reverse of the given string.</p>
+    <form>
+        <label for="ctf-input">Input:</label><br>
+        <input type="text" id="ctf-input" name="ctf-input" class="ctf-input"><br>
+        <input type="button" value="Submit" class="ctf-button" onclick="submitInput()">
+    </form>
+    <script>
+        function submitInput() {
+            let input = document.getElementById('ctf-input').value;
+            let reversedInput = input.split('').reverse().join('');
+            let result = '';
+
+            if (reversedInput === "SVEIKINim4i") {
+                result = 'Congratulations! You have found the flag.';
+            } else {
+                result = 'Incorrect! Try again.';
+            }
+
+            alert(result);
+        }
+    </script>
+</body>
+</html>
