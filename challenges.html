@@ -90,8 +90,12 @@
             var correctPassword = 'secret123'; // Change this to the actual correct password
             var resultElement = document.getElementById('result');
 
-            if (guessedPassword === correctPassword) {
-                window.location.href = 'challenge2.html';
+            if if (guessedPassword === correctPassword) {
+        resultElement.style.color = 'green';
+        resultElement.textContent = 'Congratulations! You guessed the correct password.';
+        setTimeout(function() {
+            window.location.href = 'challenge2.html';
+        }, 2000);
             } else {
                 resultElement.style.color = 'red';
                 resultElement.textContent = 'Incorrect password. Try again.';
