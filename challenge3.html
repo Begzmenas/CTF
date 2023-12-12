@@ -1,18 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
- <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CTF Password Guessing Challenge</title>
 </head>
 <body>
- <h1>Red Herrings</h1>
- <input type="text" id="answerInput" placeholder="Enter your answer here">
- <button onclick="checkAnswer()">Submit</button>
- <script src="script.js"></script>
-</body>
-</html>
+
+    <header>
+        <h1>CTF Password Guessing Challenge</h1>
+    </header>
+
+    <main>
+        <p>Can you guess the correct password to solve the challenge?</p>
+        <form>
+            <label for="password">Enter Password:</label>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <button type="button" onclick="checkPassword()">Submit Guess</button>
+        </form>
+        <p id="result"></p>
+    </main>
+
+    <footer>
+        &copy; 2023 CTF Password Guessing Challenge. All rights reserved.
+    </footer>
 <script>
 function checkAnswer() {
- var answerInput = document.getElementById('answerInput');
+ var answerInput = document.getElementById('password');
  var userAnswer = answerInput.value.toLowerCase();
   
  if (userAnswer === "redherring1" || userAnswer === "redherring2") {
