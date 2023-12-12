@@ -41,8 +41,8 @@ main {
     background-color: darkred;
     color: #fff;
     padding: 20px;
-    width: 90%;
-    max-width: 1400px;
+    width: 100%;
+    max-width: 1600px;
     margin: 0 auto;
 }
 
