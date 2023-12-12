@@ -3,78 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CTF Game - Hack the Flag</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            background-color: #f4f4f4;
-        }
-
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
-
-        nav {
-            background-color: #555;
-            padding: 10px;
-            text-align: center;
-        }
-
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            padding: 10px;
-            margin: 0 10px;
-        }
-
-        main {
-            background-color: darkred;
-            color: #fff;
-            padding: 20px;
-        }
-
-        section {
-            margin-bottom: 20px;
-        }
-
-        h2 {
-            color: #fff;
-        }
-
-        footer {
-            background-color: #555;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <title>CTF Game</title>
 </head>
 <body>
 
     <header>
-        <h1>CTF Game - Hack the Flag</h1>
+        <h1>CTF Game</h1>
     </header>
 
     <nav>
-        <a href="#">Home</a>
-        <a href="challenges.html" class="button">Challenges</a>
-        <a href="#">Leaderboard</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="challenges.html" class="button">Challenges</a></li>
+            <li><a href="#">Leaderboard</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
     </nav>
 
     <main>
         <section>
-            <h2>Welcome to Hack the Flag!</h2>
+            <h2>Welcome to the CTF Game!</h2>
             <p>Put your hacking skills to the test and conquer the challenges to become the ultimate flag hacker.</p>
         </section>
 
@@ -90,26 +40,8 @@
     </main>
 
     <footer>
-        &copy; 2023 Hack the Flag - Capture The Flag Game. All rights reserved.
+        &copy; 2023 CTF Game. All rights reserved.
     </footer>
 
 </body>
 </html>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
- var challengesLink = document.querySelector('nav a[href="challenges.html"]');
-
- challengesLink.addEventListener('click', function (event) {
-    event.preventDefault();
-
-    var iframe = document.createElement('iframe');
-    iframe.src = 'challenges.html';
-    iframe.style.width = '100%';
-    iframe.style.height = '100%';
-
-    var main = document.querySelector('main');
-    main.innerHTML = '';
-    main.appendChild(iframe);
- });
-});
-</script>
