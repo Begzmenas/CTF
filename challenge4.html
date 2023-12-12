@@ -16,7 +16,7 @@
     <main>
         <p>Welcome to the CTF challenge! Can you find the hidden flag?</p>
         <p>Here's your first clue:</p>
-        <p id="clue">Decrypt this: uifsfjtbtfdsfuqsphsbn</p>
+        <p id="clue">Decrypt this: Uifsf jt b tfdsfu qsphsbn!</p>
         <br>
         <label for="answer">Your Answer:</label>
         <input type="text" id="answer" name="answer" required>
@@ -44,7 +44,7 @@
             var answerInput = document.getElementById('answer');
             var userAnswer = answerInput.value.toLowerCase();
 
-            if (decrypt(userAnswer) === "thereisasecretpassword") {
+            if (decrypt(userAnswer) === "there is a secret password!") {
                 document.getElementById('result').innerText = "Congratulations! You found the correct answer.";
             } else {
                 document.getElementById('result').innerText = "That is not the correct answer. Keep trying.";
