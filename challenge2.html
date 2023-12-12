@@ -1,19 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Basic CTF Challenge</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CTF Password Guessing Challenge</title>
 </head>
 <body>
-    <h2>Basic CTF Challenge</h2>
-    <p>The answer is the reverse of the given string.</p>
-    <form>
-        <label for="ctf-input">Input:</label><br>
-        <input type="text" id="ctf-input" name="ctf-input" class="ctf-input"><br>
-        <input type="button" value="Submit" class="ctf-button" onclick="submitInput()">
-    </form>
+
+    <header>
+        <h1>CTF Password Guessing Challenge</h1>
+    </header>
+
+    <main>
+        <p>Can you guess the correct password to solve the challenge?</p>
+        <form>
+            <label for="password">Enter Password:</label>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <button type="button" onclick="checkPassword()">Submit Guess</button>
+        </form>
+        <p id="result"></p>
+    </main>
+
+    <footer>
+        &copy; 2023 CTF Password Guessing Challenge. All rights reserved.
+    </footer>
     <script>
         function submitInput() {
-            let input = document.getElementById('ctf-input').value;
+            let input = document.getElementById('password').value;
             let reversedInput = input.split('').reverse().join('');
             let result = '';
 
