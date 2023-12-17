@@ -45,6 +45,9 @@
 
             if (userAnswer === correctAnswer) {
                 document.getElementById('result').innerText = "Congratulations! You found the correct answer.";
+                setTimeout(function() {
+                    window.location.href = 'challenge3.html';
+                }, 2000);
             } else {
                 document.getElementById('result').innerText = "That is not the correct answer. Keep trying.";
             }
