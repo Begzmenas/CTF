@@ -6,6 +6,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CTF Picture Challenge</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        header, main, footer {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+            border: 2px solid #333;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        input {
+            padding: 10px;
+            margin: 10px 0;
+            width: 80%;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            font-weight: bold;
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+
+        footer {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 
 <body>
@@ -21,7 +81,9 @@
         <img src="https://github.com/your-username/your-repository/flag_picture.jpg" alt="Flag Picture">
         
         <p>Download the picture from the provided link:</p>
-        <a href="https://github.com/your-username/your-repository/flag_picture.jpg" download>Download Picture</a>
+        <a href="https://github.com/your-username/your-repository/flag_picture.jpg" download>
+            <button type="button">Download Picture</button>
+        </a>
 
         <p>Once you've found the flag in the picture, enter it below:</p>
         <label for="answer">Your Answer:</label>
@@ -43,13 +105,14 @@
             // Replace the placeholder with the actual flag answer
             var correctAnswer = 'yourflag';
 
+            var resultElement = document.getElementById('result');
+
             if (userAnswer === correctAnswer) {
-                document.getElementById('result').innerText = "Congratulations! You found the correct answer.";
-                setTimeout(function() {
-                    window.location.href = 'challenge6.html';
-                }, 2000);
+                resultElement.style.color = '#4CAF50';  // Green color for success
+                resultElement.textContent = "Congratulations! You found the correct answer.";
             } else {
-                document.getElementById('result').innerText = "That is not the correct answer. Keep trying.";
+                resultElement.style.color = '#e53935';  // Red color for failure
+                resultElement.textContent = "That is not the correct answer. Keep trying.";
             }
         }
     </script>
