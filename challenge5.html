@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CTF Picture Challenge</title>
@@ -62,36 +65,49 @@
         }
     </style>
 </head>
-
 <body>
-@@ -21,7 +81,9 @@ <h1>CTF Picture Challenge</h1>
+    <header>
+        <h1>CTF Picture Challenge</h1>
+    </header>
+
+    <main>
         <img src="https://github.com/your-username/your-repository/flag_picture.jpg" alt="Flag Picture">
 
         <p>Download the picture from the provided link:</p>
-        <a href="https://github.com/your-username/your-repository/flag_picture.jpg" download>Download Picture</a>
         <a href="https://github.com/your-username/your-repository/flag_picture.jpg" download>
             <button type="button">Download Picture</button>
         </a>
 
         <p>Once you've found the flag in the picture, enter it below:</p>
         <label for="answer">Your Answer:</label>
-@@ -43,13 +105,14 @@ <h1>CTF Picture Challenge</h1>
-            // Replace the placeholder with the actual flag answer
-            var correctAnswer = 'yourflag';
+        <input type="text" id="answer" name="answer" required>
 
+        <button type="button" onclick="checkAnswer()">Submit Answer</button>
+
+        <p id="result"></p>
+    </main>
+
+    <footer>
+        <!-- Your footer content goes here -->
+    </footer>
+
+    <script>
+        function checkAnswer() {
+            var userAnswer = document.getElementById('answer').value.toLowerCase();
+            var correctAnswer = 'yourflag'; // Replace with the actual flag answer
             var resultElement = document.getElementById('result');
 
             if (userAnswer === correctAnswer) {
-                document.getElementById('result').innerText = "Congratulations! You found the correct answer.";
+                resultElement.style.color = '#4CAF50'; // Green color for success
+                resultElement.textContent = "Congratulations! You found the correct answer.";
                 setTimeout(function() {
                     window.location.href = 'challenge6.html';
                 }, 2000);
-                resultElement.style.color = '#4CAF50';  // Green color for success
-                resultElement.textContent = "Congratulations! You found the correct answer.";
             } else {
-                document.getElementById('result').innerText = "That is not the correct answer. Keep trying.";
-                resultElement.style.color = '#e53935';  // Red color for failure
+                resultElement.style.color = '#e53935'; // Red color for failure
                 resultElement.textContent = "That is not the correct answer. Keep trying.";
             }
         }
     </script>
+</body>
+</html>
