@@ -52,6 +52,11 @@
     </table>
 
     <script>
+        // Load nicknames from localStorage on page load
+        window.onload = function () {
+            loadLeaderboard();
+        };
+
         function addToLeaderboard() {
             var nickname = document.getElementById('nicknameInput').value;
 
@@ -60,17 +65,44 @@
                 return;
             }
 
-            var leaderboardTable = document.getElementById('leaderboardBody');
-            var newRow = leaderboardTable.insertRow();
+            // Save the nickname to localStorage
+            saveNickname(nickname);
 
-            var rankCell = newRow.insertCell(0);
-            rankCell.textContent = leaderboardTable.rows.length; // Rank is the number of rows
-
-            var nicknameCell = newRow.insertCell(1);
-            nicknameCell.textContent = nickname;
+            // Reload and display the updated leaderboard
+            loadLeaderboard();
 
             // Clear the input field
             document.getElementById('nicknameInput').value = '';
+        }
+
+        function saveNickname(nickname) {
+            // Get existing nicknames from localStorage
+            var existingNicknames = JSON.parse(localStorage.getItem('leaderboard')) || [];
+
+            // Add the new nickname
+            existingNicknames.push(nickname);
+
+            // Save the updated nicknames back to localStorage
+            localStorage.setItem('leaderboard', JSON.stringify(existingNicknames));
+        }
+
+        function loadLeaderboard() {
+            var leaderboardTable = document.getElementById('leaderboardBody');
+            leaderboardTable.innerHTML = ''; // Clear existing entries
+
+            // Get nicknames from localStorage
+            var nicknames = JSON.parse(localStorage.getItem('leaderboard')) || [];
+
+            // Populate the leaderboard table with nicknames
+            for (var i = 0; i < nicknames.length; i++) {
+                var newRow = leaderboardTable.insertRow();
+
+                var rankCell = newRow.insertCell(0);
+                rankCell.textContent = i + 1; // Rank is the index + 1
+
+                var nicknameCell = newRow.insertCell(1);
+                nicknameCell.textContent = nicknames[i];
+            }
         }
     </script>
 
