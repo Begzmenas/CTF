@@ -29,6 +29,11 @@
         #nicknameInput {
             margin-bottom: 10px;
         }
+
+        .deleteButton {
+            cursor: pointer;
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -44,6 +49,7 @@
             <tr>
                 <th>Rank</th>
                 <th>Nickname</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody id="leaderboardBody">
@@ -52,7 +58,7 @@
     </table>
 
     <script>
-        // Load nicknames from localStorage on page load
+        // Load nicknames from GitHub Gist on page load
         window.onload = function () {
             loadLeaderboard();
         };
@@ -65,7 +71,7 @@
                 return;
             }
 
-            // Save the nickname to localStorage
+            // Save the nickname to GitHub Gist
             saveNickname(nickname);
 
             // Reload and display the updated leaderboard
@@ -75,23 +81,43 @@
             document.getElementById('nicknameInput').value = '';
         }
 
-        function saveNickname(nickname) {
-            // Get existing nicknames from localStorage
-            var existingNicknames = JSON.parse(localStorage.getItem('leaderboard')) || [];
+        async function saveNickname(nickname) {
+            // Get existing nicknames from GitHub Gist
+            var gistId = 'ce85c608a34a0b76258a54645eb3cd79'; // Replace with your Gist ID
+            var gistData = await fetch(`https://api.github.com/gists/${gistId}`)
+                .then(response => response.json());
+
+            var existingNicknames = gistData.files['leaderboard.json'].content ? JSON.parse(gistData.files['leaderboard.json'].content) : [];
 
             // Add the new nickname
             existingNicknames.push(nickname);
 
-            // Save the updated nicknames back to localStorage
-            localStorage.setItem('leaderboard', JSON.stringify(existingNicknames));
+            // Save the updated nicknames back to GitHub Gist
+            await fetch(`https://api.github.com/gists/${gistId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    files: {
+                        'leaderboard.json': {
+                            content: JSON.stringify(existingNicknames),
+                        },
+                    },
+                }),
+            });
         }
 
-        function loadLeaderboard() {
+        async function loadLeaderboard() {
             var leaderboardTable = document.getElementById('leaderboardBody');
             leaderboardTable.innerHTML = ''; // Clear existing entries
 
-            // Get nicknames from localStorage
-            var nicknames = JSON.parse(localStorage.getItem('leaderboard')) || [];
+            // Get nicknames from GitHub Gist
+            var gistId = 'ce85c608a34a0b76258a54645eb3cd79'; // Replace with your Gist ID
+            var gistData = await fetch(`https://api.github.com/gists/${gistId}`)
+                .then(response => response.json());
+
+            var nicknames = gistData.files['leaderboard.json'].content ? JSON.parse(gistData.files['leaderboard.json'].content) : [];
 
             // Populate the leaderboard table with nicknames
             for (var i = 0; i < nicknames.length; i++) {
@@ -102,7 +128,46 @@
 
                 var nicknameCell = newRow.insertCell(1);
                 nicknameCell.textContent = nicknames[i];
+
+                var deleteCell = newRow.insertCell(2);
+                var deleteButton = document.createElement('span');
+                deleteButton.className = 'deleteButton';
+                deleteButton.textContent = 'Delete';
+                deleteButton.onclick = function () {
+                    deleteNickname(this.parentNode.parentNode.rowIndex - 1); // Subtract 1 for zero-based index
+                };
+                deleteCell.appendChild(deleteButton);
             }
+        }
+
+        async function deleteNickname(index) {
+            // Get existing nicknames from GitHub Gist
+            var gistId = 'ce85c608a34a0b76258a54645eb3cd79'; // Replace with your Gist ID
+            var gistData = await fetch(`https://api.github.com/gists/${gistId}`)
+                .then(response => response.json());
+
+            var existingNicknames = gistData.files['leaderboard.json'].content ? JSON.parse(gistData.files['leaderboard.json'].content) : [];
+
+            // Remove the nickname at the specified index
+            existingNicknames.splice(index, 1);
+
+            // Save the updated nicknames back to GitHub Gist
+            await fetch(`https://api.github.com/gists/${gistId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    files: {
+                        'leaderboard.json': {
+                            content: JSON.stringify(existingNicknames),
+                        },
+                    },
+                }),
+            });
+
+            // Reload and display the updated leaderboard
+            loadLeaderboard();
         }
     </script>
 
