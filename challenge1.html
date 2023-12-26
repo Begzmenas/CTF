@@ -5,8 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CTF Password Guessing Challenge</title>
-    <script src="https://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/tripledes.js"></script>
-    <script src="https://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
 </head>
 <body>
 
@@ -30,29 +28,17 @@
     </footer>
 
     <script>
-        // This is the encrypted password
-        var encryptedCorrectPassword = "U2FsdGVkX18ssjOGpDUG7zr2mdwjjMXe";
-
-        function decryptPassword(encryptedPassword, key) {
-            var decrypted = CryptoJS.TripleDES.decrypt(encryptedPassword, key);
-            return decrypted.toString(CryptoJS.enc.Utf8);
-        }
-
         function checkPassword() {
             var guessedPassword = document.getElementById('password').value;
-            var key = "secretkey123";
-
-            // Decrypt the stored correct password
-            var correctPassword = decryptPassword(encryptedCorrectPassword, key);
-
+            var correctPassword = 'secret123'; // Change this to the actual correct password
             var resultElement = document.getElementById('result');
 
             if (guessedPassword === correctPassword) {
-                resultElement.style.color = 'green';
-                resultElement.textContent = 'Congratulations! You guessed the correct password.';
-                setTimeout(function() {
-                    window.location.href = 'challenge2.html';
-                }, 2000);
+        resultElement.style.color = 'green';
+        resultElement.textContent = 'Congratulations! You guessed the correct password.';
+        setTimeout(function() {
+            window.location.href = 'challenge2.html';
+        }, 2000);
             } else {
                 resultElement.style.color = 'red';
                 resultElement.textContent = 'Incorrect password. Try again.';
