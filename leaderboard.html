@@ -1,186 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaderboard</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-        }
-
-        #leaderboard {
-            border-collapse: collapse;
-            width: 50%;
-            margin: 20px auto;
-        }
-
-        #leaderboard th, #leaderboard td {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-
-        #leaderboard th {
-            background-color: #f2f2f2;
-        }
-
-        #nicknameInput {
-            margin-bottom: 10px;
-        }
-
-        .deleteButton {
-            cursor: pointer;
-            color: red;
-        }
-    </style>
+    <title>CTF Player Ranking</title>
 </head>
 <body>
-
-    <h1>Leaderboard</h1>
-
-    <label for="nicknameInput">Enter your nickname: </label>
-    <input type="text" id="nicknameInput">
-    <button onclick="addToLeaderboard()">Add to Leaderboard</button>
-
-    <table id="leaderboard">
-        <thead>
-            <tr>
-                <th>Rank</th>
-                <th>Nickname</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody id="leaderboardBody">
-            <!-- Leaderboard entries will be added here dynamically -->
-        </tbody>
-    </table>
+    <h1>CTF Player Ranking</h1>
+    <form id="playerForm">
+        <label for="playerName">Player Name:</label>
+        <input type="text" id="playerName" name="playerName" required>
+        <button type="submit">Submit</button>
+    </form>
+    <h2>Players who finished the game:</h2>
+    <ul id="playerList"></ul>
 
     <script>
-        // Load nicknames from GitHub Gist on page load
-        window.onload = function () {
-            loadLeaderboard();
-        };
+        const playerForm = document.getElementById('playerForm');
+        const playerList = document.getElementById('playerList');
 
-        function addToLeaderboard() {
-            var nickname = document.getElementById('nicknameInput').value;
+        let playerNames = [];
 
-            if (nickname.trim() === '') {
-                alert('Please enter a valid nickname.');
-                return;
+        playerForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const playerName = document.getElementById('playerName').value;
+
+            if (!playerNames.includes(playerName)) {
+                playerNames.push(playerName);
             }
 
-            // Save the nickname to GitHub Gist
-            saveNickname(nickname);
-
-            // Reload and display the updated leaderboard
-            loadLeaderboard();
-
-            // Clear the input field
-            document.getElementById('nicknameInput').value = '';
-        }
-       async function saveNickname(nickname) {
-    try {
-        // Get existing nicknames from GitHub Gist
-        var gistId = '59f80d8d88293f0a1ccb71cb3604b9b6'; // Replace with your Gist ID
-        var gistData = await fetch(`https://api.github.com/gists/${gistId}`)
-            .then(response => response.json());
-
-        var existingNicknames = gistData.files['leaderboard.json'].content ? JSON.parse(gistData.files['leaderboard.json'].content) : [];
-
-        // Add the new nickname
-        existingNicknames.push(nickname);
-
-        // Save the updated nicknames back to GitHub Gist
-        await fetch(`https://api.github.com/gists/${gistId}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                files: {
-                    'leaderboard.json': {
-                        content: JSON.stringify(existingNicknames),
-                    },
-                },
-            }),
-        });
-    } catch (error) {
-        console.error('Error saving nickname:', error);
-        // Handle the error as needed
-    }
-}
-
-// Example usage:
-// const nickname = 'JohnDoe';
-// saveNickname(nickname);
-
-    }
-}
-
-        async function loadLeaderboard() {
-            var leaderboardTable = document.getElementById('leaderboardBody');
-            leaderboardTable.innerHTML = ''; // Clear existing entries
-
-            // Get nicknames from GitHub Gist
-            var gistId = '59f80d8d88293f0a1ccb71cb3604b9b6'; // Replace with your Gist ID
-            var gistData = await fetch(`https://api.github.com/gists/${gistId}`)
-                .then(response => response.json());
-
-            var nicknames = gistData.files['leaderboard.json'].content ? JSON.parse(gistData.files['leaderboard.json'].content) : [];
-
-            // Populate the leaderboard table with nicknames
-            for (var i = 0; i < nicknames.length; i++) {
-                var newRow = leaderboardTable.insertRow();
-
-                var rankCell = newRow.insertCell(0);
-                rankCell.textContent = i + 1; // Rank is the index + 1
-
-                var nicknameCell = newRow.insertCell(1);
-                nicknameCell.textContent = nicknames[i];
-
-                var deleteCell = newRow.insertCell(2);
-                var deleteButton = document.createElement('span');
-                deleteButton.className = 'deleteButton';
-                deleteButton.textContent = 'Delete';
-                deleteButton.onclick = function () {
-                    deleteNickname(this.parentNode.parentNode.rowIndex - 1); // Subtract 1 for zero-based index
-                };
-                deleteCell.appendChild(deleteButton);
-            }
-        }
-
-        async function deleteNickname(index) {
-            // Get existing nicknames from GitHub Gist
-            var gistId = '59f80d8d88293f0a1ccb71cb3604b9b6'; // Replace with your Gist ID
-            var gistData = await fetch(`https://api.github.com/gists/${gistId}`)
-                .then(response => response.json());
-
-            var existingNicknames = gistData.files['leaderboard.json'].content ? JSON.parse(gistData.files['leaderboard.json'].content) : [];
-
-            // Remove the nickname at the specified index
-            existingNicknames.splice(index, 1);
-
-            // Save the updated nicknames back to GitHub Gist
-            await fetch(`https://api.github.com/gists/${gistId}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    files: {
-                        'leaderboard.json': {
-                            content: JSON.stringify(existingNicknames),
-                        },
-                    },
-                }),
+            playerList.innerHTML = '';
+            playerNames.forEach((name) => {
+                const listItem = document.createElement('li');
+                listItem.textContent = name;
+                playerList.appendChild(listItem);
             });
 
-            // Reload and display the updated leaderboard
-            loadLeaderboard();
-        }
+            document.getElementById('playerName').value = '';
+        });
     </script>
-
 </body>
 </html>
