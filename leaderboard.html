@@ -82,31 +82,43 @@
         }
 
         async function saveNickname(nickname) {
-            // Get existing nicknames from GitHub Gist
-            var gistId = '59f80d8d88293f0a1ccb71cb3604b9b6'; // Replace with your Gist ID
-            var gistData = await fetch(`https://api.github.com/gists/${gistId}`)
-                .then(response => response.json());
+    try {
+        // Get existing nicknames from GitHub Gist
+        var gistId = '59f80d8d88293f0a1ccb71cb3604b9b6'; // Replace with your Gist ID
+        var gistData = await fetch(`https://api.github.com/gists/${gistId}`)
+            .then(response => response.json());
 
-            var existingNicknames = gistData.files['leaderboard.json'].content ? JSON.parse(gistData.files['leaderboard.json'].content) : [];
+        var existingNicknames = gistData.files['leaderboard.json'].content ? JSON.parse(gistData.files['leaderboard.json'].content) : [];
 
-            // Add the new nickname
-            existingNicknames.push(nickname);
+        // Add the new nickname
+        existingNicknames.push(nickname);
 
-            // Save the updated nicknames back to GitHub Gist
-            await fetch(`https://api.github.com/gists/${gistId}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    files: {
-                        'leaderboard.json': {
-                            content: JSON.stringify(existingNicknames),
-                        },
+        // Save the updated nicknames back to GitHub Gist
+        await fetch(`https://api.github.com/gists/${gistId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                files: {
+                    'leaderboard.json': {
+                        content: JSON.stringify(existingNicknames),
                     },
-                }),
-            });
-        }
+                },
+            }),
+        });
+
+        // Reload and display the updated leaderboard
+        loadLeaderboard();
+
+        // Clear the input field
+        document.getElementById('nicknameInput').value = '';
+    } catch (error) {
+        console.error('Error saving nickname:', error);
+        // Handle the error, display a message to the user, or take appropriate action.
+        alert('An error occurred while saving the nickname. Please try again.');
+    }
+}
 
         async function loadLeaderboard() {
             var leaderboardTable = document.getElementById('leaderboardBody');
