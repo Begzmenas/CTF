@@ -1,54 +1,97 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>CTF Player Ranking</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CTF Game Finish</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #3f51b5;
+        }
+        
+        form {
+            display: inline-block;
+            margin-top: 2rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        button {
+            background-color: #4caf50;
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
 </head>
 <body>
-    <h1>CTF Player Ranking</h1>
+    <h1>Players Who Finished The CTF Game:</h1>
     <form id="playerForm">
         <label for="playerName">Player Name:</label>
-        <input type="text" id="playerName" name="playerName" required>
-        <button type="submit">Submit</button>
+        <input type="text" id="playerName" required />
+        <button type="submit">Add Player</button>
     </form>
-    <h2>Players who finished the game123:</h2>
-    <ul id="playerList"></ul>
-
+    <ul id="playersList"></ul>
+    
     <script>
-        const playerForm = document.getElementById('playerForm');
-        const playerList = document.getElementById('playerList');
-
-        let playerNames = [];
-
-        playerForm.addEventListener('submit', (event) => {
+        document.getElementById('playerForm').addEventListener('submit', function (event) {
             event.preventDefault();
-
-            const playerName = document.getElementById('playerName').value;
-
-            if (!playerNames.includes(playerName)) {
-                playerNames.push(playerName);
-                Cookies.set('playerNames', playerNames, { expires: 365 });
+            
+            const playerName = document.getElementById('playerName');
+            const playersList = document.getElementById('playersList');
+            
+            if (!localStorage.getItem('ctfPlayers')) {
+                localStorage.setItem('ctfPlayers', JSON.stringify([]));
             }
-
-            playerList.innerHTML = '';
-            playerNames.forEach((name) => {
-                const listItem = document.createElement('li');
-                listItem.textContent = name;
-                playerList.appendChild(listItem);
-            });
-
-            document.getElementById('playerName').value = '';
+            
+            let currentPlayers = JSON.parse(localStorage.getItem('ctfPlayers'));
+            currentPlayers.push(playerName.value);
+            localStorage.setItem('ctfPlayers', JSON.stringify(currentPlayers));
+            
+            renderPlayers();
+            playerName.value = '';
         });
-
-        if (Cookies.get('playerNames')) {
-            playerNames = Cookies.getJSON('playerNames');
-
-            playerNames.forEach((name) => {
-                const listItem = document.createElement('li');
-                listItem.textContent = name;
-                playerList.appendChild(listItem);
+        
+        function renderPlayers() {
+            const playersList = document.getElementById('playersList');
+            playersList.innerHTML = '';
+            
+            let currentPlayers = JSON.parse(localStorage.getItem('ctfPlayers'));
+            
+            currentPlayers.forEach((player, index) => {
+                const li = document.createElement('li');
+                li.innerText = `${index + 1}. ${player}`;
+                playersList.appendChild(li);
             });
         }
+        
+        // Load saved players when the DOM is loaded
+        window.onload = () => {
+            renderPlayers();
+        };
     </script>
 </body>
 </html>
