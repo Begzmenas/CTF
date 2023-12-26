@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #leaderboard {
+            border-collapse: collapse;
+            width: 50%;
+            margin: 20px auto;
+        }
+
+        #leaderboard th, #leaderboard td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #leaderboard th {
+            background-color: #f2f2f2;
+        }
+
+        #nicknameInput {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Leaderboard</h1>
+
+    <label for="nicknameInput">Enter your nickname: </label>
+    <input type="text" id="nicknameInput">
+    <button onclick="addToLeaderboard()">Add to Leaderboard</button>
+
+    <table id="leaderboard">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Nickname</th>
+            </tr>
+        </thead>
+        <tbody id="leaderboardBody">
+            <!-- Leaderboard entries will be added here dynamically -->
+        </tbody>
+    </table>
+
+    <script>
+        function addToLeaderboard() {
+            var nickname = document.getElementById('nicknameInput').value;
+
+            if (nickname.trim() === '') {
+                alert('Please enter a valid nickname.');
+                return;
+            }
+
+            var leaderboardTable = document.getElementById('leaderboardBody');
+            var newRow = leaderboardTable.insertRow();
+
+            var rankCell = newRow.insertCell(0);
+            rankCell.textContent = leaderboardTable.rows.length; // Rank is the number of rows
+
+            var nicknameCell = newRow.insertCell(1);
+            nicknameCell.textContent = nickname;
+
+            // Clear the input field
+            document.getElementById('nicknameInput').value = '';
+        }
+    </script>
+
+</body>
+</html>
