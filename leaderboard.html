@@ -83,7 +83,7 @@
 
         async function saveNickname(nickname) {
             // Get existing nicknames from GitHub Gist
-            var gistId = 'ce85c608a34a0b76258a54645eb3cd79'; // Replace with your Gist ID
+            var gistId = '59f80d8d88293f0a1ccb71cb3604b9b6'; // Replace with your Gist ID
             var gistData = await fetch(`https://api.github.com/gists/${gistId}`)
                 .then(response => response.json());
 
@@ -113,7 +113,7 @@
             leaderboardTable.innerHTML = ''; // Clear existing entries
 
             // Get nicknames from GitHub Gist
-            var gistId = 'ce85c608a34a0b76258a54645eb3cd79'; // Replace with your Gist ID
+            var gistId = '59f80d8d88293f0a1ccb71cb3604b9b6'; // Replace with your Gist ID
             var gistData = await fetch(`https://api.github.com/gists/${gistId}`)
                 .then(response => response.json());
 
@@ -142,7 +142,7 @@
 
         async function deleteNickname(index) {
             // Get existing nicknames from GitHub Gist
-            var gistId = 'ce85c608a34a0b76258a54645eb3cd79'; // Replace with your Gist ID
+            var gistId = '59f80d8d88293f0a1ccb71cb3604b9b6'; // Replace with your Gist ID
             var gistData = await fetch(`https://api.github.com/gists/${gistId}`)
                 .then(response => response.json());
 
