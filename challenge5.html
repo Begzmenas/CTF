@@ -17,7 +17,7 @@
     <main>
         <p>Welcome to the CTF image challenge! Can you find the hidden flag in the picture?</p>
         <p>Download the picture using the link below:</p>
-        <p><a href="flag_picture.jpg" download>Download Picture</a></p>
+        <p><a href="hP1.jpg" download>Download Picture</a></p>
         <br>
         <label for="answer">Your Answer:</label>
         <input type="text" id="answer" name="answer" required>
@@ -35,8 +35,8 @@
             var answerInput = document.getElementById('answer');
             var userAnswer = answerInput.value.toLowerCase();
 
-            if (userAnswer === "hiddenflag") {
-                document.getElementById('result').innerText = "Congratulations! You found the hidden flag.";
+            if (userAnswer === "Lietuva") {
+                document.getElementById('result').innerText = "Congratulations! You have found the hidden flag.";
                 setTimeout(function() {
                 window.location.href = 'challenge6.html';
                 }, 2000);
