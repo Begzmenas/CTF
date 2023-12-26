@@ -80,8 +80,7 @@
             // Clear the input field
             document.getElementById('nicknameInput').value = '';
         }
-
-        async function saveNickname(nickname) {
+       async function saveNickname(nickname) {
     try {
         // Get existing nicknames from GitHub Gist
         var gistId = '59f80d8d88293f0a1ccb71cb3604b9b6'; // Replace with your Gist ID
@@ -107,16 +106,16 @@
                 },
             }),
         });
-
-        // Reload and display the updated leaderboard
-        loadLeaderboard();
-
-        // Clear the input field
-        document.getElementById('nicknameInput').value = '';
     } catch (error) {
         console.error('Error saving nickname:', error);
-        // Handle the error, display a message to the user, or take appropriate action.
-        alert('An error occurred while saving the nickname. Please try again.');
+        // Handle the error as needed
+    }
+}
+
+// Example usage:
+// const nickname = 'JohnDoe';
+// saveNickname(nickname);
+
     }
 }
 
