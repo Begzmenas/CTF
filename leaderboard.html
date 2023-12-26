@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>CTF Player Ranking</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
 </head>
 <body>
     <h1>CTF Player Ranking</h1>
@@ -26,6 +27,7 @@
 
             if (!playerNames.includes(playerName)) {
                 playerNames.push(playerName);
+                Cookies.set('playerNames', playerNames, { expires: 365 });
             }
 
             playerList.innerHTML = '';
@@ -37,6 +39,16 @@
 
             document.getElementById('playerName').value = '';
         });
+
+        if (Cookies.get('playerNames')) {
+            playerNames = Cookies.getJSON('playerNames');
+
+            playerNames.forEach((name) => {
+                const listItem = document.createElement('li');
+                listItem.textContent = name;
+                playerList.appendChild(listItem);
+            });
+        }
     </script>
 </body>
 </html>
