@@ -22,7 +22,7 @@
         <label for="answer">Your Answer:</label>
         <input type="text" id="answer" name="answer" required>
         <br>
-        <button type="button" onclick="checkAnswer()">Submit Answer</button>
+        <button type="button" onclick="submitFlag()">Submit Answer</button>
         <p id="result"></p>
     </main>
 
@@ -31,20 +31,32 @@
     </footer>
 
     <script>
-        function checkAnswer() {
-            var answerInput = document.getElementById('answer');
-            var userAnswer = answerInput.value.toLowerCase();
+        const correctAnswerHash = 'af933e1bf1eab858825fc23f6439599185871b529176891dc2a2a420dc5b05b8b293d720f6ab9facbd67b3212375f1dab793636b38a902be2c636d39074551d1';
 
-            if (userAnswer === "lietuva") {
-                document.getElementById('result').innerText = "Congratulations! You have found the hidden flag.";
+        async function sha512(input) {
+            const hashBuffer = await crypto.subtle.digest('SHA-512', new TextEncoder().encode(input));
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+            return hashHex;
+        }
+
+        async function submitFlag() {
+            const userAnswer = document.getElementById('answer').value.toLowerCase();
+            const resultElement = document.getElementById('result');
+
+            const hashedUserAnswer = await sha512(userAnswer);
+
+            if (hashedUserAnswer === correctAnswerHash) {
+                resultElement.style.color = 'green';
+                resultElement.textContent = 'Congratulations! You have found the hidden flag.';
                 setTimeout(function() {
-                window.location.href = 'uU(N^7t<q!6.html';
+                    window.location.href = 'uU(N^7t<q!6.html';
                 }, 2000);
             } else {
-                document.getElementById('result').innerText = "That is not the correct answer. Keep trying.";
+                resultElement.style.color = 'red';
+                resultElement.textContent = 'That is not the correct answer. Keep trying.';
             }
         }
     </script>
 </body>
-
 </html>
