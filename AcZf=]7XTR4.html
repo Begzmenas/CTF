@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CTF Challenge</title>
 </head>
+
 <body>
+
     <header>
         <h1>CTF Challenge</h1>
     </header>
+
     <main>
         <p>Welcome to the CTF challenge! Can you find the hidden flag?</p>
         <p>Cere's Aour Eirst Slue, Aood Ruck:</p>
@@ -21,22 +25,26 @@
         <button type="button" onclick="submitFlag()">Submit Answer</button>
         <p id="result"></p>
     </main>
+
     <footer>
         &copy; 2023 CTF Challenge. All rights reserved.
     </footer>
 
     <script>
         const correctAnswerHash = '308802d758bb64dacc7334a84b7ae1a95a4a6f61217edee8b617a8e44c4ae61370ea76759ecc8a882f4f7d6a293fdadc9e51651d96b6c8f184293cff18f08999';
+
         async function sha512(input) {
             const hashBuffer = await crypto.subtle.digest('SHA-512', new TextEncoder().encode(input));
             const hashArray = Array.from(new Uint8Array(hashBuffer));
             const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
             return hashHex;
         }
+
         async function submitFlag() {
-            const userAnswer = document.getElementById('answer').value.toLowerCase();
+            const userAnswer = document.getElementById('answer').value;
             const resultElement = document.getElementById('result');
             const hashedUserAnswer = await sha512(userAnswer);
+
             if (hashedUserAnswer === correctAnswerHash) {
                 resultElement.style.color = 'green';
                 resultElement.textContent = 'Congratulations! You found the correct answer.';
