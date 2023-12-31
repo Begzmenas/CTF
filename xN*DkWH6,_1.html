@@ -18,7 +18,7 @@
             <label for="password">Enter Password:</label>
             <input type="password" id="password" name="password" required>
             <br>
-            <button type="button" onclick="checkPassword()">Submit Guess</button>
+            <button type="button" onclick="submitFlag()">Submit Guess</button>
         </form>
         <p id="result"></p>
     </main>
@@ -28,17 +28,32 @@
     </footer>
 
     <script>
-        function checkPassword() {
-            var guessedPassword = document.getElementById('password').value;
-            var correctPassword = 'secret123'; // Change this to the actual correct password
-            var resultElement = document.getElementById('result');
+        // Define the correct password hash for the challenge (replace with your actual hash)
+        const correctPasswordHash = '348735696e74c45e7fbf9c6839d87f891486d19e5059db7e397d5086e486dc0051a533752805dc9288463673f0a6fcbf2a655548738a85305b2d571bae44a71e';
 
-            if (guessedPassword === correctPassword) {
-        resultElement.style.color = 'green';
-        resultElement.textContent = 'Congratulations! You guessed the correct password.';
-        setTimeout(function() {
-            window.location.href = 's}TdPM36wL2.html';
-        }, 2000);
+        // Function to encrypt input using SHA512
+        async function sha512(input) {
+            const hashBuffer = await crypto.subtle.digest('SHA-512', new TextEncoder().encode(input));
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+            return hashHex;
+        }
+
+        // Function to handle form submission
+        async function submitFlag() {
+            const guessedPassword = document.getElementById('password').value;
+            const resultElement = document.getElementById('result');
+
+            // Encrypt submitted password using SHA512
+            const hashedPassword = await sha512(guessedPassword);
+
+            // Check if the hashed input matches the correct password hash
+            if (hashedPassword === correctPasswordHash) {
+                resultElement.style.color = 'green';
+                resultElement.textContent = 'Congratulations! You guessed the correct password.';
+                setTimeout(function() {
+                    window.location.href = 's}TdPM36wL2.html';
+                }, 2000);
             } else {
                 resultElement.style.color = 'red';
                 resultElement.textContent = 'Incorrect password. Try again.';
