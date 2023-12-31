@@ -41,7 +41,7 @@
         }
 
         async function submitFlag() {
-            const userAnswer = document.getElementById('answer').value.toLowerCase();
+            const userAnswer = document.getElementById('answer').value;
             const resultElement = document.getElementById('result');
 
             const hashedUserAnswer = await sha512(userAnswer);
