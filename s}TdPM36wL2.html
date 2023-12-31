@@ -27,10 +27,8 @@
         &copy; 2023 CTF Password Guessing Challenge. All rights reserved.
     </footer>
     <script>
-        // Define the correct password hash for the challenge (replace with your actual hash)
         const correctPasswordHash = '3a59b21302b030cc4a1f3c6fbb1dc3e48451d0d3079fe4c2085f18e973c03fc27a64126cc2f4cc67e313f9e29c0fd0b0eb896ccaf2b8f50a10fd8a5a709211bd';
 
-        // Function to encrypt input using SHA512
         async function sha512(input) {
             const hashBuffer = await crypto.subtle.digest('SHA-512', new TextEncoder().encode(input));
             const hashArray = Array.from(new Uint8Array(hashBuffer));
@@ -38,16 +36,13 @@
             return hashHex;
         }
 
-        // Function to handle form submission
         async function submitFlag() {
             const guessedPassword = document.getElementById('password').value;
             const reversedInput = guessedPassword.split('').reverse().join('');
             const resultElement = document.getElementById('result');
 
-            // Encrypt submitted password using SHA512
             const hashedPassword = await sha512(reversedInput);
 
-            // Check if the hashed input matches the correct password hash
             if (hashedPassword === correctPasswordHash) {
                 resultElement.style.color = 'green';
                 resultElement.textContent = 'Congratulations! You guessed the correct password.';
