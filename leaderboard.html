@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CTF Game Finish</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <title>CTF Game Finish</title>
 </head>
 <body>
     <h1>Players Who Finished The CTF Game:</h1>
@@ -27,7 +27,7 @@
             }
 
             let currentPlayers = JSON.parse(localStorage.getItem('ctfPlayers'));
-            const timestamp = new Date().toLocaleString(); // Display timestamp in the player's local time zone
+            const timestamp = new Date().toLocaleString();
             currentPlayers.push({ name: playerName.value, timestamp: timestamp });
             localStorage.setItem('ctfPlayers', JSON.stringify(currentPlayers));
 
@@ -43,7 +43,7 @@
 
             currentPlayers.forEach((player, index) => {
                 const li = document.createElement('li');
-                li.innerText = `${index + 1}. ${player.name} - ${player.timestamp}`;
+                li.innerText = `Name ${index + 1}: ${player.name} - ${player.timestamp}`;
                 playersList.appendChild(li);
             });
         }
