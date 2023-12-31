@@ -28,26 +28,20 @@
     </footer>
 
     <script>
-        // Define the correct password hash for the challenge (replace with your actual hash)
         const correctPasswordHash = 'd0efdee0385bacc4cc65e61d7b91b0402d1f704246179dd9be0063d437411f47b6138e0bbd5e358b7024528e31c94c0383ea65c38853dda824e4532e256639ec';
 
-        // Function to encrypt input using SHA512
         async function sha512(input) {
             const hashBuffer = await crypto.subtle.digest('SHA-512', new TextEncoder().encode(input));
             const hashArray = Array.from(new Uint8Array(hashBuffer));
             const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
             return hashHex;
         }
-
-        // Function to handle form submission
         async function submitFlag() {
             const guessedPassword = document.getElementById('password').value;
             const resultElement = document.getElementById('result');
 
-            // Encrypt submitted password using SHA512
             const hashedPassword = await sha512(guessedPassword);
 
-            // Check if the hashed input matches the correct password hash
             if (hashedPassword === correctPasswordHash) {
                 resultElement.style.color = 'green';
                 resultElement.textContent = 'Congratulations! You guessed the correct password.';
@@ -60,6 +54,5 @@
             }
         }
     </script>
-
 </body>
 </html>
