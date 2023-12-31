@@ -1,13 +1,55 @@
+Take this code:
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CTF Game Finish</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+        }
 
+        h1 {
+            color: #3f51b5;
+        }
+
+        form {
+            display: inline-block;
+            margin-top: 2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        button {
+            background-color: #4caf50;
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+            text-align: left;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+    </style>
+</head>
 <body>
     <h1>Players Who Finished The CTF Game:</h1>
     <form id="playerForm">
@@ -16,7 +58,7 @@
         <button type="submit">Add Player</button>
     </form>
     <ul id="playersList"></ul>
-
+    
     <script>
         document.getElementById('playerForm').addEventListener('submit', function (event) {
             event.preventDefault();
@@ -30,7 +72,7 @@
 
             let currentPlayers = JSON.parse(localStorage.getItem('ctfPlayers'));
             const timestamp = new Date().toLocaleString();
-            currentPlayers.unshift({ name: playerName.value, timestamp: timestamp });
+            currentPlayers.push({ name: playerName.value, timestamp: timestamp });
             localStorage.setItem('ctfPlayers', JSON.stringify(currentPlayers));
 
             renderPlayers();
@@ -55,5 +97,4 @@
         };
     </script>
 </body>
-
 </html>
