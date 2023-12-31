@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CTF Game Finish</title>
 </head>
 <body>
@@ -43,7 +43,7 @@
 
             currentPlayers.forEach((player, index) => {
                 const li = document.createElement('li');
-                li.innerText = `Name ${index + 1}: ${player.name} - ${player.timestamp}`;
+                li.innerText = `${player.name} - ${player.timestamp}`;
                 playersList.appendChild(li);
             });
         }
