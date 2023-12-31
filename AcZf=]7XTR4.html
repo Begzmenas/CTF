@@ -22,7 +22,7 @@
         <label for="answer">Your Answer:</label>
         <input type="text" id="answer" name="answer" required>
         <br>
-        <button type="button" onclick="checkAnswer()">Submit Answer</button>
+        <button type="button" onclick="submitFlag()">Submit Answer</button>
         <p id="result"></p>
     </main>
 
@@ -31,27 +31,35 @@
     </footer>
 
     <script>
-        function decrypt(text) {
-            
-            const shift = 1;
-            return text.replace(/[a-zA-Z]/g, function (char) {
-                const code = char.charCodeAt(0);
-                const offset = char === char.toLowerCase() ? 97 : 65;
-                return String.fromCharCode((code - offset - shift + 26) % 26 + offset);
-            });
+        // Define the correct answer hash for the challenge (replace with your actual hash)
+        const correctAnswerHash = '308802d758bb64dacc7334a84b7ae1a95a4a6f61217edee8b617a8e44c4ae61370ea76759ecc8a882f4f7d6a293fdadc9e51651d96b6c8f184293cff18f08999';
+
+        // Function to hash a string using SHA512
+        async function sha512(input) {
+            const hashBuffer = await crypto.subtle.digest('SHA-512', new TextEncoder().encode(input));
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+            return hashHex;
         }
 
-        function checkAnswer() {
-            var answerInput = document.getElementById('answer');
-            var userAnswer = answerInput.value.toLowerCase();
+        // Function to handle form submission
+        async function submitFlag() {
+            const userAnswer = document.getElementById('answer').value.toLowerCase();
+            const resultElement = document.getElementById('result');
 
-            if (decrypt(userAnswer) === "automobilis") {
-                document.getElementById('result').innerText = "Congratulations! You found the correct answer.";
+            // Hash the submitted answer using SHA512
+            const hashedUserAnswer = await sha512(userAnswer);
+
+            // Check if the hashed input matches the correct answer hash
+            if (hashedUserAnswer === correctAnswerHash) {
+                resultElement.style.color = 'green';
+                resultElement.textContent = 'Congratulations! You found the correct answer.';
                 setTimeout(function() {
-                window.location.href = 'FhNw9y<P!a5.html';
+                    window.location.href = 'FhNw9y<P!a5.html';
                 }, 2000);
             } else {
-                document.getElementById('result').innerText = "That is not the correct answer. Keep trying.";
+                resultElement.style.color = 'red';
+                resultElement.textContent = 'That is not the correct answer. Keep trying.';
             }
         }
     </script>
