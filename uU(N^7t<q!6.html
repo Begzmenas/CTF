@@ -22,7 +22,7 @@
         <label for="answer">Your Answer:</label>
         <input type="text" id="answer" name="answer" required>
         <br>
-        <button type="button" onclick="checkAnswer()">Submit Answer</button>
+        <button type="button" onclick="submitFlag()">Submit Answer</button>
         <p id="result"></p>
     </main>
 
@@ -31,20 +31,32 @@
     </footer>
 
     <script>
-        function checkAnswer() {
-            var answerInput = document.getElementById('answer');
-            var userAnswer = answerInput.value.toLowerCase();
+        const correctAnswerHash = 'fc4ab0622a469efde65087fd202e0a449ff23c7e139bb98820d61e83550d9c82978c68fbbecb39864fbc4d0bff36f64968b2a8060fdecf1771c938df74ac50bc';
 
-            if (userAnswer === "tylos") {
-                document.getElementById('result').innerText = "Congratulations! You have found the hidden flag.";
+        async function sha512(input) {
+            const hashBuffer = await crypto.subtle.digest('SHA-512', new TextEncoder().encode(input));
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+            return hashHex;
+        }
+
+        async function submitFlag() {
+            const userAnswer = document.getElementById('answer').value.toLowerCase();
+            const resultElement = document.getElementById('result');
+
+            const hashedUserAnswer = await sha512(userAnswer);
+
+            if (hashedUserAnswer === correctAnswerHash) {
+                resultElement.style.color = 'green';
+                resultElement.textContent = 'Congratulations! You have found the hidden flag.';
                 setTimeout(function() {
-                window.location.href = 'pH9~v;.k_r7.html';
+                    window.location.href = 'pH9~v;.k_r7.html';
                 }, 2000);
             } else {
-                document.getElementById('result').innerText = "That is not the correct answer. Keep trying.";
+                resultElement.style.color = 'white';
+                resultElement.textContent = 'That is not the correct answer. Keep trying.';
             }
         }
     </script>
 </body>
-
 </html>
