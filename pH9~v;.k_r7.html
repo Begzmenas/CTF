@@ -22,7 +22,7 @@
         <label for="answer">Your Answer:</label>
         <input type="text" id="answer" name="answer" required>
         <br>
-        <button type="button" onclick="checkAnswer()">Submit Answer</button>
+        <button type="button" onclick="submitAnswer()">Submit Answer</button>
         <p id="result"></p>
     </main>
 
@@ -31,24 +31,31 @@
     </footer>
 
     <script>
-        function checkAnswer() {
-            var answerInput = document.getElementById('answer');
-            var userAnswer = answerInput.value.toLowerCase();
+        const correctAnswerHash = '70c9645c6fd0ff743ff4c8da209d5ae445e51dd3e47a19684313fa3938db429bc66749ba43458659d9a0e066cc5ad7c1439ce7af061ffc9c8731a62809caa671';
 
-            // Replace this with the actual correct answer for the decryption
-            var correctAnswer = "decrypted_text";
+        async function sha512(input) {
+            const hashBuffer = await crypto.subtle.digest('SHA-512', new TextEncoder().encode(input));
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+            return hashHex;
+        }
 
-            if (userAnswer === "vilnius university") {
-                document.getElementById('result').innerText = "Congratulations! You decrypted the text successfully.";
+        async function submitAnswer() {
+            const userAnswer = document.getElementById('answer').value;
+            const resultElement = document.getElementById('result');
+            const hashedUserAnswer = await sha512(userAnswer);
+
+            if (hashedUserAnswer === correctAnswerHash) {
+                resultElement.style.color = 'green';
+                resultElement.textContent = 'Congratulations! You decrypted the text successfully.';
                 setTimeout(function() {
                     window.location.href = 'leaderboard.html';
                 }, 2000);
             } else {
-                document.getElementById('result').innerText = "That is not the correct answer. Keep decrypting.";
+                resultElement.style.color = 'white';
+                resultElement.textContent = 'That is not the correct answer. Keep decrypting.';
             }
         }
     </script>
-
 </body>
-
 </html>
