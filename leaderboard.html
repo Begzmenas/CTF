@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <title>CTF Game Finish</title>
-    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h1>Players Who Finished The CTF Game:</h1>
@@ -18,36 +18,36 @@
     <script>
         document.getElementById('playerForm').addEventListener('submit', function (event) {
             event.preventDefault();
-            
+
             const playerName = document.getElementById('playerName');
             const playersList = document.getElementById('playersList');
-            
+
             if (!localStorage.getItem('ctfPlayers')) {
                 localStorage.setItem('ctfPlayers', JSON.stringify([]));
             }
-            
+
             let currentPlayers = JSON.parse(localStorage.getItem('ctfPlayers'));
-            const timestamp = new Date().toISOString().slice(0, 10); // YYYY-MM-DD format
+            const timestamp = new Date().toISOString().slice(0, 19).replace("T", " "); // YYYY-MM-DD HH:MM:SS format
             currentPlayers.push({ name: playerName.value, timestamp: timestamp });
             localStorage.setItem('ctfPlayers', JSON.stringify(currentPlayers));
-            
+
             renderPlayers();
             playerName.value = '';
         });
-        
+
         function renderPlayers() {
             const playersList = document.getElementById('playersList');
             playersList.innerHTML = '';
-            
+
             let currentPlayers = JSON.parse(localStorage.getItem('ctfPlayers'));
-            
+
             currentPlayers.forEach((player, index) => {
                 const li = document.createElement('li');
                 li.innerText = `${index + 1}. ${player.name} - ${player.timestamp}`;
                 playersList.appendChild(li);
             });
         }
-        
+
         // Load saved players when the DOM is loaded
         window.onload = () => {
             renderPlayers();
