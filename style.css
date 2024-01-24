@@ -56,11 +56,15 @@ main {
 
 .input-box {
     width: 200px; /* Set your desired width */
-    padding: 1px; /* Add some padding for better appearance */
     margin: 8px auto; /* Add some margin for spacing */
     box-sizing: border-box;
 }
 
+.submit-button {
+    width: 150px;
+    margin: 8px auto;
+    box-sizing: border-box;
+}
 
 section {
     margin-bottom: 20px;
