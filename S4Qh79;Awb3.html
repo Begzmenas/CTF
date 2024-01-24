@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CTF Password Guessing Challenge</title>
+    <title>CTF CHALLENGE #3</title>
 </head>
 
 <body>
@@ -39,14 +39,17 @@
             var userAnswer = answerInput.value;
 
             const hashedUserAnswer = hashString(userAnswer);
+            const resultElement = document.getElementById('result');
 
             if (hashedUserAnswer === 'Y3Rma2V5MQ==') {
-                alert("Congratulations! You found the correct answer.");
-                 setTimeout(function() {
-            window.location.href = 'AcZf=]7XTR4.html';
-        }, 2000);
+                resultElement.style.color = 'green';
+                resultElement.textContent = 'Congratulations! You found the correct answer.';
+                setTimeout(function() {
+                    window.location.href = 'AcZf=]7XTR4.html';
+                }, 2000);
             } else {
-                alert("That is not the correct answer. Keep trying.");
+                resultElement.style.color = 'white';
+                resultElement.textContent = 'That is not the correct answer. Keep trying.';
             }
         }
     </script>
